@@ -1,0 +1,30 @@
+server:
+  host: "0.0.0.0"
+  port: 8139
+  debug: false
+
+database:
+  url: "sqlite:///data/blockchain_explorer.db"
+
+cache:
+  json_dir: "data/cache"
+  ttl_seconds:
+    balance: 30
+    transaction: 3600
+    block: 3600
+    token_info: 86400
+    fourbyte: 86400
+
+auth:
+  api_keys:
+    - "dev-key-12345"
+  rate_limit:
+    default:
+      requests: 100
+      window_seconds: 60
+
+scheduler:
+  enabled: true
+  block_sync_interval_seconds: 15
+  event_sync_interval_seconds: 30
+  reorg_scan_depth: 20

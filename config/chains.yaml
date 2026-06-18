@@ -1,0 +1,84 @@
+chains:
+  ethereum:
+    chain_id: 1
+    name: "Ethereum Mainnet"
+    native_currency:
+      name: "Ether"
+      symbol: "ETH"
+      decimals: 18
+    rpc_nodes:
+      - url: "https://eth.llamarpc.com"
+        priority: 1
+      - url: "https://rpc.ankr.com/eth"
+        priority: 2
+      - url: "https://cloudflare-eth.com"
+        priority: 3
+    qps_limit: 50
+    block_time: 12
+    explorer_url: "https://etherscan.io"
+    event_topics:
+      - "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"  # Transfer
+      - "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"  # Approval
+
+  polygon:
+    chain_id: 137
+    name: "Polygon Mainnet"
+    native_currency:
+      name: "MATIC"
+      symbol: "MATIC"
+      decimals: 18
+    rpc_nodes:
+      - url: "https://polygon.llamarpc.com"
+        priority: 1
+      - url: "https://rpc.ankr.com/polygon"
+        priority: 2
+      - url: "https://polygon-rpc.com"
+        priority: 3
+    qps_limit: 50
+    block_time: 2
+    explorer_url: "https://polygonscan.com"
+    event_topics:
+      - "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      - "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
+
+  arbitrum:
+    chain_id: 42161
+    name: "Arbitrum One"
+    native_currency:
+      name: "Ether"
+      symbol: "ETH"
+      decimals: 18
+    rpc_nodes:
+      - url: "https://arbitrum.llamarpc.com"
+        priority: 1
+      - url: "https://rpc.ankr.com/arbitrum"
+        priority: 2
+      - url: "https://arb1.arbitrum.io/rpc"
+        priority: 3
+    qps_limit: 50
+    block_time: 0.3
+    explorer_url: "https://arbiscan.io"
+    event_topics:
+      - "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      - "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
+
+  bsc:
+    chain_id: 56
+    name: "BNB Smart Chain"
+    native_currency:
+      name: "BNB"
+      symbol: "BNB"
+      decimals: 18
+    rpc_nodes:
+      - url: "https://bsc.llamarpc.com"
+        priority: 1
+      - url: "https://rpc.ankr.com/bsc"
+        priority: 2
+      - url: "https://bsc-dataseed.binance.org"
+        priority: 3
+    qps_limit: 50
+    block_time: 3
+    explorer_url: "https://bscscan.com"
+    event_topics:
+      - "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      - "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
