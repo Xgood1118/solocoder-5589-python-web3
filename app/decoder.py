@@ -3,7 +3,7 @@ import json
 import threading
 from typing import Dict, Optional, Tuple
 from eth_abi import decode
-from eth_utils import to_bytes, hexstr_to_bytes, function_signature_to_4byte_selector, event_abi_to_log_topic
+from eth_utils import to_bytes, function_signature_to_4byte_selector
 from .cache import TieredCache
 
 
@@ -55,7 +55,7 @@ BUILTIN_EVENTS: Dict[str, Dict] = {
 
 
 def _pad_hex_to_bytes32(h: str) -> bytes:
-    b = hexstr_to_bytes(h) if h.startswith("0x") else bytes.fromhex(h)
+    b = to_bytes(hexstr=h) if h.startswith("0x") else bytes.fromhex(h)
     if len(b) < 32:
         b = b"\x00" * (32 - len(b)) + b
     return b
@@ -146,7 +146,7 @@ def decode_input_data(input_data: str) -> Dict:
     result["function"] = name
     try:
         if param_types:
-            raw_params = hexstr_to_bytes(input_data[10:]) if len(input_data) > 10 else b""
+            raw_params = to_bytes(hexstr=input_data[10:]) if len(input_data) > 10 else b""
             decoded = decode(param_types, raw_params)
             for t, v in zip(param_types, decoded):
                 if isinstance(v, bytes):
@@ -166,7 +166,7 @@ def decode_revert_reason(output: str) -> Optional[str]:
     if not output or output == "0x":
         return None
     try:
-        data = hexstr_to_bytes(output) if output.startswith("0x") else bytes.fromhex(output)
+        data = to_bytes(hexstr=output) if output.startswith("0x") else bytes.fromhex(output)
         if len(data) >= 4 and data[:4] == b"\x08\xc3y\xa0":
             decoded = decode(["string"], data[4:])
             return decoded[0] if decoded else None
@@ -219,7 +219,7 @@ def decode_event_log(log: Dict) -> Dict:
                     decoded_params[name] = topics[i + 1]
         if non_indexed_types and log.get("data") and log["data"] != "0x":
             try:
-                raw_data = hexstr_to_bytes(log["data"])
+                raw_data = to_bytes(hexstr=log["data"])
                 vals = decode(non_indexed_types, raw_data)
                 for name, t, v in zip(non_indexed_names, non_indexed_types, vals):
                     if isinstance(v, bytes):
