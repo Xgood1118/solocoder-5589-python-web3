@@ -143,6 +143,13 @@ class BlockchainService:
 
     def _format_block(self, data: Dict, with_tx: bool) -> Dict:
         txs = data.get("transactions", [])
+        if not isinstance(txs, list):
+            txs = []
+        tx_count = len(txs)
+        if with_tx and tx_count > 0 and isinstance(txs[0], dict):
+            block_txs = txs
+        else:
+            block_txs = [tx for tx in txs if isinstance(tx, str)]
         return {
             "number": _to_int(data.get("number")),
             "hash": data.get("hash"),
@@ -161,9 +168,9 @@ class BlockchainService:
             "gas_limit": _to_int(data.get("gasLimit")),
             "gas_used": _to_int(data.get("gasUsed")),
             "timestamp": _ts_to_dt(data.get("timestamp")).isoformat(),
-            "transaction_count": len(txs) if isinstance(txs, list) else 0,
+            "transaction_count": tx_count,
             "base_fee_per_gas": str(_to_int(data.get("baseFeePerGas"))) if data.get("baseFeePerGas") else None,
-            "transactions": txs if with_tx and isinstance(txs[0], dict) if txs else False else [tx for tx in txs if isinstance(tx, str)],
+            "transactions": block_txs,
         }
 
     # ---- Transaction operations ----
